@@ -100,6 +100,8 @@ LOCAL_MODULE := libslang
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_CFLAGS += $(local_cflags_for_slang)
+# Needed because clang headers used by slang_rs.cpp aren't clean
+LOCAL_CFLAGS += -fno-strict-aliasing
 
 TBLGEN_TABLES :=    \
 	AttrList.inc	\
@@ -256,6 +258,9 @@ ifeq ($(HOST_OS),windows)
 else
   LOCAL_LDLIBS := -ldl -lpthread
 endif
+
+# Needed because clang headers used by slang_rs.cpp aren't clean
+LOCAL_CFLAGS += -fno-strict-aliasing
 
 # For build RSCCOptions.inc from RSCCOptions.td
 intermediates := $(call local-intermediates-dir)
